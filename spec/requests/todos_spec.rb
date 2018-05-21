@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'Todos API', type: :request do
   # initialise test data
   let(:user) { create(:user) }
-  let!(:todos) { create_list(:todo, 10, created_by: user.id) }
+  let!(:todos) { create_list(:todo, 25, created_by: user.id) }
   let(:todo_id) { todos.first.id }
   let(:headers) { valid_headers }
 
@@ -16,13 +16,21 @@ RSpec.describe 'Todos API', type: :request do
     it 'returns todos' do
       # Note `json` is a custom helper to parse JSON response
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json.size).to eq(20)
     end
 
     it 'returns a status code 200' do
       expect(response).to have_http_status(200)
     end
 
+  end
+
+  describe 'GET /todos?page=2' do
+    before { get '/todos', params: {page: 2}, headers: headers }
+    it 'returns an empty array' do
+      expect(json).not_to be_empty
+      expect(json.size).to eq(5)
+    end
   end
   
   describe 'Get /todos/:id' do

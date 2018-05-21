@@ -15,7 +15,6 @@ RSpec.describe 'Items API', type: :request do
     before { get "/todos/#{todo_id}/items", params: {}, headers: headers }
 
     context 'when todo exists' do
-      binding.pry
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
