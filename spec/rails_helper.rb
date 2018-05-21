@@ -59,7 +59,8 @@ RSpec.configure do |config|
   end
   # [...]
   
-  config.include RequestSpecHelper, type: :request
+  config.include RequestSpecHelper
+  config.include ControllerSpecHelper
   config.filter_rails_from_backtrace!
 
 end
